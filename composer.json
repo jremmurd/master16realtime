@@ -1,0 +1,25 @@
+{
+  "name": "master16/rt",
+  "description": "a realtime interface",
+  "type": "project",
+  "version": "0.1",
+  "require": {
+    "react/zmq": "^0.3.0",
+    "react/promise": "*",
+    "nesbot/carbon": "~1"
+  },
+  "autoload": {
+    "files": [
+    ],
+    "psr-4": {
+      "RT\\": "src/RT"
+    }
+  },
+  "authors": [
+    {
+      "name": "Julian Raab",
+      "email": "julian@raab.media"
+    }
+  ],
+  "minimum-stability": "dev"
+}
