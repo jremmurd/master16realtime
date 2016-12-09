@@ -10,6 +10,7 @@ namespace RT\Event;
 
 
 use Carbon\Carbon;
+use Realtime\Channel\IChannel;
 use RT\Util\Jsonify;
 
 abstract class Event
@@ -21,11 +22,20 @@ abstract class Event
 
     protected $data;
 
+
+
+
     public function __construct()
     {
         $this->id = uniqid("rt-e-");
         $this->createdAt = Carbon::now();
     }
+
+
+    public function send(IChannel $channel){
+        $channel->publish($this);
+    }
+
 
     public function __toString()
     {

@@ -5,14 +5,14 @@
   "version": "0.1",
   "require": {
     "react/zmq": "^0.3.0",
-    "react/promise": "*",
-    "nesbot/carbon": "~1"
+    "nesbot/carbon": "~1",
+    "react/promise": "^2.4"
   },
   "autoload": {
     "files": [
     ],
     "psr-4": {
-      "RT\\": "src/RT"
+      "RT\\": "src"
     }
   },
   "authors": [

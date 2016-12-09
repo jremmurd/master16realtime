@@ -2,16 +2,14 @@
 /**
  * Created by PhpStorm.
  * User: Julian Raab
- * Date: 06.12.2016
- * Time: 17:26
+ * Date: 09.12.2016
+ * Time: 14:09
  */
 
 namespace RT\Service;
 
 
-interface IProvider
+interface IService
 {
-
-    public function onInit();
 
 }

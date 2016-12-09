@@ -10,6 +10,7 @@
 namespace RT;
 
 use RT\Service\IProvider;
+use RT\Service\IService;
 use RT\Service\PushService;
 use RT\Service\ServiceProvider;
 
@@ -18,12 +19,12 @@ class ServiceFactory
 
     private static $instance;
 
-    private $loop;
+    /* @var $pushService IService */
+    protected $pushService;
+
 
     private function __construct()
     {
-        $this->loop = \React\EventLoop\Factory::create();
-        $this->loop->run();
     }
 
     /**
@@ -37,18 +38,13 @@ class ServiceFactory
         return self::$instance;
     }
 
-    public function createPushService(IProvider $server)
+    public function getPushService(\RT\Service\Provider\IProvider $server = null)
     {
-        return new PushService($server);
+        if(!$this->pushService){
+            $this->pushService = new PushService($server);
+        }
+        return $this->pushService;
     }
-
-    /**
-     * @return \React\EventLoop\ExtEventLoop|\React\EventLoop\LibEventLoop|\React\EventLoop\LibEvLoop|\React\EventLoop\StreamSelectLoop
-     */
-    public function getLoop(){
-        return $this->loop;
-    }
-
 
 
 }
