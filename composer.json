@@ -9,8 +9,6 @@
     "react/promise": "^2.4"
   },
   "autoload": {
-    "files": [
-    ],
     "psr-4": {
       "RT\\": "src"
     }
