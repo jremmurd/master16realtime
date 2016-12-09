@@ -33,14 +33,14 @@ class ServiceFactory
     public static function instance()
     {
         if (!self::$instance) {
-            new self();
+            self::$instance = new self();
         }
         return self::$instance;
     }
 
     public function getPushService(\RT\Service\Provider\IProvider $server = null)
     {
-        if(!$this->pushService){
+        if (!$this->pushService) {
             $this->pushService = new PushService($server);
         }
         return $this->pushService;
