@@ -28,7 +28,7 @@ class PushService implements IService
         }
 
         /* @var $context \React\ZMQ\Context */
-        $context = new \React\ZMQ\Context($server);
+        $context = new \ZMQContext($server);
         $this->socket = $context->getSocket(\ZMQ::SOCKET_PUSH);
 
         $this->socket->bind("tcp://{$server->getHost()}:{$server->getPort()}");
