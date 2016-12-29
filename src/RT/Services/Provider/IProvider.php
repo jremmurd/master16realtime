@@ -12,7 +12,7 @@ namespace RT\Service\Provider;
 interface IProvider
 {
 
-    public function getPort();
-    public function getHost();
+    public function getPort():string;
+    public function getHost():string;
 
 }

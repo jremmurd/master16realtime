@@ -14,7 +14,7 @@ use RT\Service\IService;
 use RT\Service\PushService;
 use RT\Service\ServiceProvider;
 
-class ServiceFactory
+class ServiceLocator
 {
 
     private static $instance;

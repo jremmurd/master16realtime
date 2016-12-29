@@ -23,8 +23,6 @@ abstract class Event
     protected $data;
 
 
-
-
     public function __construct()
     {
         $this->id = uniqid("rt-e-");
@@ -32,7 +30,8 @@ abstract class Event
     }
 
 
-    public function send(IChannel $channel){
+    public function send(IChannel $channel)
+    {
         $channel->publish($this);
     }
 
@@ -42,4 +41,8 @@ abstract class Event
         return \Zend_Json::encode($this->getJsonData());
     }
 
+    public function addRoom($room)
+    {
+        $this->rooms[] = $room;
+    }
 }
