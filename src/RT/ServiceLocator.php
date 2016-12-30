@@ -9,18 +9,16 @@
 
 namespace RT;
 
-use RT\Service\IProvider;
-use RT\Service\IService;
-use RT\Service\PushService;
-use RT\Service\ServiceProvider;
+use RT\Service\Provider\IProvider;
+use RT\Service\SocketBrokerService;
 
 class ServiceLocator
 {
 
     private static $instance;
 
-    /* @var $pushService IService */
-    protected $pushService;
+    /* @var $services [] IService */
+    protected $services;
 
 
     private function __construct()
@@ -28,7 +26,7 @@ class ServiceLocator
     }
 
     /**
-     * @return ServiceFactory
+     * @return ServiceLocator
      */
     public static function instance()
     {
@@ -38,12 +36,20 @@ class ServiceLocator
         return self::$instance;
     }
 
-    public function getPushService(\RT\Service\Provider\IProvider $server = null)
+    protected function getOrInstantiateService(string $serviceType, IProvider $provider = null)
     {
-        if (!$this->pushService) {
-            $this->pushService = new PushService($server);
+        if (class_exists($serviceType)) {
+            if (!$this->services[$serviceType]) {
+                $this->services[$serviceType] = new $serviceType($provider);
+            }
+            return $this->services[$serviceType];
         }
-        return $this->pushService;
+    }
+
+    public function getSocketBrokerService(\RT\Service\Provider\IProvider $provider = null)
+    {
+//        return new SocketBrokerService();
+        return $this->getOrInstantiateService(SocketBrokerService::class, $provider);
     }
 
 

@@ -13,7 +13,7 @@ class DefaultServiceProvider implements IProvider
 {
 
     protected $host = "127.0.0.1";
-    protected $port = "5555";
+    protected $port = "5559";
 
     /**
      * @return string

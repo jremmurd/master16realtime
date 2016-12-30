@@ -10,14 +10,12 @@
 namespace RT\Service;
 
 use React\ZMQ\SocketWrapper;
-use Realtime\Channel\Channel;
+use Realtime\Channel\IChannel;
 use RT\Event\Event;
 use RT\Service\Provider\DefaultServiceProvider;
 use RT\Service\Provider\IProvider;
-use RT\Service\Provider\ServiceProvider;
-use RT\ServiceFactory;
 
-class DefaultPushService implements IService
+class SocketPushService implements IService
 {
     /* @var SocketWrapper $socket */
     private $socket;
@@ -35,12 +33,12 @@ class DefaultPushService implements IService
 
     }
 
-    public function onError(callable $fn)
+    public function onError(callable $fn = null)
     {
         $this->socket->on('error', $fn);
     }
 
-    public function push(Channel $channel, Event $event)
+    public function push(IChannel $channel, Event $event)
     {
 
         $resolver = function (callable $resolve, callable $reject) use ($channel, $event) {
