@@ -9,6 +9,7 @@
 
 namespace RT;
 
+use Pimcore\Log\Simple;
 use RT\Service\Provider\IProvider;
 use RT\Service\SocketBrokerService;
 
@@ -42,6 +43,7 @@ class ServiceLocator
             if (!$this->services[$serviceType]) {
                 $this->services[$serviceType] = new $serviceType($provider);
             }
+            Simple::log("_rt", print_r($this->services, 1));
             return $this->services[$serviceType];
         }
     }

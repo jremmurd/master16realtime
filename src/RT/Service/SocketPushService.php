@@ -10,7 +10,7 @@
 namespace RT\Service;
 
 use React\ZMQ\SocketWrapper;
-use Realtime\Channel\PubSubable;
+use RT\Channel\IRealtimeChannel;
 use RT\Event\Event;
 use RT\Service\Provider\DefaultServiceProvider;
 use RT\Service\Provider\IProvider;
@@ -38,12 +38,12 @@ class SocketPushService implements IService
         $this->socket->on('error', $fn);
     }
 
-    public function push(PubSubable $channel, Event $event)
+    public function push(IRealtimeChannel $channel, Event $event)
     {
 
         $resolver = function (callable $resolve, callable $reject) use ($channel, $event) {
             $data = $event->getJsonData();
-            $data["rooms"] = $channel->getSignature();
+            $data["rooms"] = $channel->getRealtimeSignature();
             $this->socket->send(json_encode($data));
             $resolve(true);
         };

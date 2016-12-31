@@ -13,6 +13,13 @@ use Carbon\Carbon;
 abstract class PublishEvent extends Event
 {
 
+    public function __construct(string $verb)
+    {
+        parent::__construct();
+
+        $this->verb = $verb;
+    }
+
     private $publishedAt;
 
     protected $verb = "unknown";

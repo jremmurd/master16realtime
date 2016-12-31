@@ -30,12 +30,6 @@ abstract class Event
     }
 
 
-    public function send(PubSubable $channel)
-    {
-        $channel->publish($this);
-    }
-
-
     public function __toString()
     {
         return \Zend_Json::encode($this->getJsonData());
