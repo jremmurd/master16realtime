@@ -9,11 +9,11 @@
 namespace RT\Service;
 
 
-use Realtime\Channel\IChannel;
+use Realtime\Channel\PubSubable;
 use RT\Event\Event;
 
 interface IService
 {
     public function onError(callable $fn = null);
-    public function push(IChannel $channel, Event $event);
+    public function push(PubSubable $channel, Event $event);
 }

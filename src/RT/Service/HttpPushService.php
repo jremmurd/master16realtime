@@ -9,7 +9,7 @@
 
 namespace RT\Service;
 
-use Realtime\Channel\IChannel;
+use Realtime\Channel\PubSubable;
 use RT\Event\Event;
 use RT\Service\Provider\DefaultServiceProvider;
 use RT\Service\Provider\IProvider;
@@ -38,7 +38,7 @@ class HttpPushService implements IService
         call_user_func($this->errorCb);
     }
 
-    public function push(IChannel $channel, Event $event)
+    public function push(PubSubable $channel, Event $event)
     {
 
         $url = $this->server->getHost() . ":" . $this->server->getPort() . "/" . $channel->getSignature();

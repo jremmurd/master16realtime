@@ -10,7 +10,7 @@
 namespace RT\Service;
 
 use React\ZMQ\SocketWrapper;
-use Realtime\Channel\IChannel;
+use Realtime\Channel\PubSubable;
 use RT\Event\Event;
 use RT\Service\Provider\DefaultServiceProvider;
 use RT\Service\Provider\IProvider;
@@ -38,7 +38,7 @@ class SocketPushService implements IService
         $this->socket->on('error', $fn);
     }
 
-    public function push(IChannel $channel, Event $event)
+    public function push(PubSubable $channel, Event $event)
     {
 
         $resolver = function (callable $resolve, callable $reject) use ($channel, $event) {

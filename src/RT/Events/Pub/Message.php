@@ -20,6 +20,4 @@ class Message extends PublishEvent {
         $this->data = $data;
     }
 
-
-
 }

@@ -10,7 +10,7 @@ namespace RT\Event;
 
 
 use Carbon\Carbon;
-use Realtime\Channel\IChannel;
+use Realtime\Channel\PubSubable;
 use RT\Util\Jsonify;
 
 abstract class Event
@@ -30,7 +30,7 @@ abstract class Event
     }
 
 
-    public function send(IChannel $channel)
+    public function send(PubSubable $channel)
     {
         $channel->publish($this);
     }
