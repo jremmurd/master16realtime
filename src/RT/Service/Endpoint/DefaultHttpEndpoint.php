@@ -7,13 +7,13 @@
  * Time: 17:29
  */
 
-namespace RT\Service\Provider;
+namespace RT\Service\Endpoint;
 
-class DefaultServiceProvider implements IProvider
+class DefaultHttpEndpoint implements IEndpoint
 {
 
     protected $host = "127.0.0.1";
-    protected $port = "5559";
+    protected $port = "1337";
 
     /**
      * @return string

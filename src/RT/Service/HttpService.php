@@ -14,20 +14,22 @@ use RT\Channel\IRealtimeChannel;
 use RT\Channel\PubSubable;
 use RT\Event\Event;
 use RT\Event\PublishEvent;
+use RT\Service\Endpoint\DefaultHttpEndpoint;
+use RT\Service\Endpoint\IEndpoint;
 use RT\Service\Provider\DefaultHttpProvider;
 use RT\Service\Provider\IProvider;
 
 class HttpService implements IService
 {
-    private $server;
+    private $endpoint;
     private $errorCb;
 
-    public function __construct(IProvider $server = null)
+    public function __construct(IEndpoint $endpoint = null)
     {
-        if (!$server) {
-            $server = new DefaultHttpProvider();
+        if (!$endpoint) {
+            $endpoint = new DefaultHttpEndpoint();
         }
-        $this->server = $server;
+        $this->endpoint = $endpoint;
 
     }
 
@@ -47,18 +49,23 @@ class HttpService implements IService
     {
 
         if (!$event instanceof PublishEvent) {
-            throw new \Exception("PubSub Channel required.");
+            throw new \Exception("PubSub Channel required for HTTP Service.");
         }
 
         /* @var $channel PublishEvent */
 
-        $url = "http://" . $this->server->getHost() . ":" . $this->server->getPort() .
+        $url = "http://" . $this->endpoint->getHost() . ":" . $this->endpoint->getPort() .
             "/" . $channel->getRealtimeSignature(true)[0] .
             "/" . $event->getVerb() .
             "/" . $channel->getRealtimeSignature(true)[1] .
             "?changes=" . urlencode($event);
+        Simple::log("_rt", "{$event->getVerb()} to {$channel->getRealtimeSignature()};");
 
-        $result = file_get_contents($url);
+        try {
+            $result = file_get_contents($url);
+        } catch (\Exception $e) {
+            Simple::log("_rt", $e->getMessage());
+        }
 
         if (!$result) {
             $this->error();

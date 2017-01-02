@@ -14,6 +14,5 @@ use RT\Event\Event;
 
 interface IService
 {
-    public function onError(callable $fn = null);
     public function push(IRealtimeChannel $channel, Event $event);
 }

@@ -6,10 +6,10 @@
  * Time: 17:26
  */
 
-namespace RT\Service\Provider;
+namespace RT\Service\Endpoint;
 
 
-interface IProvider
+interface IEndpoint
 {
 
     public function getPort():string;

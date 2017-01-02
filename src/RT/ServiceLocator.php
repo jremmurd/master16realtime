@@ -10,22 +10,48 @@
 namespace RT;
 
 use Pimcore\Log\Simple;
+use RT\Client\Codebase;
 use RT\Service\HttpService;
-use RT\Service\Provider\IProvider;
+use RT\Service\Endpoint\IEndpoint;
+use RT\Service\IService;
 use RT\Service\SocketBrokerService;
 use RT\Service\SocketService;
+use Symfony\Component\VarDumper\Caster\ReflectionCaster;
 
 class ServiceLocator
 {
 
     private static $instance;
 
-    /* @var $services [] IService */
+    /* @var $services IService[] */
     protected $services;
+
+    /**
+     * @var $endpoints Service\Endpoint\IEndpoint[]
+     */
+    protected $endpoints;
+
+    /**
+     * @var $codebase Codebase
+     */
+    protected $codebase;
 
 
     private function __construct()
     {
+        $this->codebase = new Codebase();
+    }
+
+    public function setEndpoint(string $serviceType, IEndpoint $endpoint)
+    {
+        if (class_exists($serviceType)) {
+            $this->endpoints[$serviceType] = $endpoint;
+        }
+    }
+
+    public function getCodebase()
+    {
+        return $this->codebase;
     }
 
     /**
@@ -39,30 +65,32 @@ class ServiceLocator
         return self::$instance;
     }
 
-    protected function getOrInstantiateService(string $serviceType, IProvider $provider = null)
+    protected function getService(string $serviceType)
     {
-        if (class_exists($serviceType)) {
+        $class = new \ReflectionClass($serviceType);
+        if (class_exists($serviceType) && $class->implementsInterface(IService::class)) {
             if (!$this->services[$serviceType]) {
-                $this->services[$serviceType] = new $serviceType($provider);
+                $this->services[$serviceType] = new $serviceType($this->endpoints[$serviceType]);
             }
-            Simple::log("_rt", print_r($this->services, 1));
+
             return $this->services[$serviceType];
+
         }
     }
 
-    public function getSocketBrokerService(\RT\Service\Provider\IProvider $provider = null)
+    public function getSocketBrokerService()
     {
-        return $this->getOrInstantiateService(SocketBrokerService::class, $provider);
+        return $this->getService(SocketBrokerService::class);
     }
 
-    public function getHttpService(\RT\Service\Provider\IProvider $provider = null)
+    public function getHttpService()
     {
-        return $this->getOrInstantiateService(HttpService::class, $provider);
+        return $this->getService(HttpService::class);
     }
 
-    public function getSocketService(\RT\Service\Provider\IProvider $provider = null)
+    public function getSocketService()
     {
-        return $this->getOrInstantiateService(SocketService::class, $provider);
+        return $this->getService(SocketService::class);
     }
 
 

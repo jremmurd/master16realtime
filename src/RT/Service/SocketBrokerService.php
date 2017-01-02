@@ -13,6 +13,8 @@ use Pimcore\Log\Simple;
 use React\ZMQ\SocketWrapper;
 use RT\Channel\IRealtimeChannel;
 use RT\Event\Event;
+use RT\Service\Endpoint\DefaultSocketEndpoint;
+use RT\Service\Endpoint\IEndpoint;
 use RT\Service\Provider\DefaultServiceProvider;
 use RT\Service\Provider\IProvider;
 
@@ -21,17 +23,17 @@ class SocketBrokerService implements IService
     /* @var SocketWrapper $socket */
     private $socket;
 
-    public function __construct(IProvider $server = null)
+    public function __construct(IEndpoint $endpoint = null)
     {
         // TODO: consider starting the broker automatically, or output errors etc
 
-        if (!$server) {
-            $server = new DefaultServiceProvider();
+        if (!$endpoint) {
+            $endpoint = new DefaultSocketEndpoint();
         }
 
         $context = new \ZMQContext();
 
-        $dns = "tcp://{$server->getHost()}:{$server->getPort()}";
+        $dns = "tcp://{$endpoint->getHost()}:{$endpoint->getPort()}";
 //
         $requester = new \ZMQSocket($context, \ZMQ::SOCKET_REQ);
 //        $socket = $context->getSocket(\ZMQ::SOCKET_PUSH);

@@ -17,7 +17,7 @@ class Update extends PublishEvent {
 
     public function __construct($data)
     {
-        parent::__construct("update");
+        parent::__construct("updated");
 
         $this->data = $data;
     }
