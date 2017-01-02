@@ -9,8 +9,11 @@
 namespace RT\Event\Pub;
 
 use RT\Event\PublishEvent;
+use RT\Util\Jsonify;
 
-class Message extends PublishEvent {
+class Message extends PublishEvent
+{
+    use Jsonify;
 
     public function __construct($data)
     {

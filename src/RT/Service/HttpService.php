@@ -58,7 +58,7 @@ class HttpService implements IService
             "/" . $channel->getRealtimeSignature(true)[0] .
             "/" . $event->getVerb() .
             "/" . $channel->getRealtimeSignature(true)[1] .
-            "?changes=" . urlencode($event);
+            "?event=" . urlencode($event);
         Simple::log("_rt", "{$event->getVerb()} to {$channel->getRealtimeSignature()};");
 
         try {
