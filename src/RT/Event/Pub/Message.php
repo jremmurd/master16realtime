@@ -14,9 +14,8 @@ class Message extends PublishEvent {
 
     public function __construct($data)
     {
-        parent::__construct();
+        parent::__construct("msg");
 
-        $this->verb = "msg";
         $this->data = $data;
     }
 

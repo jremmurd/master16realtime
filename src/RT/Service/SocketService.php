@@ -15,7 +15,7 @@ use RT\Event\Event;
 use RT\Service\Provider\DefaultServiceProvider;
 use RT\Service\Provider\IProvider;
 
-class SocketPushService implements IService
+class SocketService implements IService
 {
     /* @var SocketWrapper $socket */
     private $socket;

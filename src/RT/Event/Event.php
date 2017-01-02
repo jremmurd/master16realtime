@@ -15,18 +15,17 @@ use RT\Util\Jsonify;
 
 abstract class Event
 {
-    use Jsonify;
-
-    private $id;
-    private $createdAt;
+    protected $id;
+    protected $createdAt;
 
     protected $data;
 
+    use Jsonify;
 
     public function __construct()
     {
-        $this->id = uniqid("rt-e-");
-        $this->createdAt = Carbon::now();
+        $this->id = uniqid("rt-");
+        $this->createdAt = Carbon::now()->timestamp;
     }
 
 

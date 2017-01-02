@@ -10,8 +10,10 @@
 namespace RT;
 
 use Pimcore\Log\Simple;
+use RT\Service\HttpService;
 use RT\Service\Provider\IProvider;
 use RT\Service\SocketBrokerService;
+use RT\Service\SocketService;
 
 class ServiceLocator
 {
@@ -50,8 +52,17 @@ class ServiceLocator
 
     public function getSocketBrokerService(\RT\Service\Provider\IProvider $provider = null)
     {
-//        return new SocketBrokerService();
         return $this->getOrInstantiateService(SocketBrokerService::class, $provider);
+    }
+
+    public function getHttpService(\RT\Service\Provider\IProvider $provider = null)
+    {
+        return $this->getOrInstantiateService(HttpService::class, $provider);
+    }
+
+    public function getSocketService(\RT\Service\Provider\IProvider $provider = null)
+    {
+        return $this->getOrInstantiateService(SocketService::class, $provider);
     }
 
 

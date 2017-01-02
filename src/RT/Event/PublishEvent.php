@@ -9,24 +9,31 @@
 namespace RT\Event;
 
 use Carbon\Carbon;
+use RT\Util\Jsonify;
 
 abstract class PublishEvent extends Event
 {
+    use Jsonify;
 
-    public function __construct(string $verb)
+    protected $verb;
+
+    public function __construct($verb = "unknown")
     {
         parent::__construct();
 
         $this->verb = $verb;
     }
 
-    private $publishedAt;
-
-    protected $verb = "unknown";
 
     public function setPublished()
     {
         $this->publishedAt = Carbon::now();
     }
+
+    public function getVerb()
+    {
+        return $this->verb;
+    }
+
 
 }
