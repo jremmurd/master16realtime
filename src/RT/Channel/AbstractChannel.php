@@ -25,6 +25,11 @@ abstract class Channel implements PubSubable, IRealtimeChannel
         $this->realtimeService = $realtimeService;
     }
 
+    public function getRealtimeService()
+    {
+        return $this->realtimeService;
+    }
+
     public function beforePublish()
     {
         return true;

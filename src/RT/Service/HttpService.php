@@ -59,10 +59,12 @@ class HttpService implements IService
             "/" . $event->getVerb() .
             "/" . $channel->getRealtimeSignature(true)[1] .
             "?event=" . urlencode($event);
-        Simple::log("_rt", "{$event->getVerb()} to {$channel->getRealtimeSignature()};");
+
 
         try {
+            // todo catch 404
             $result = file_get_contents($url);
+            Simple::log("_rt", "{$event->getVerb()} to {$channel->getRealtimeSignature()};");
         } catch (\Exception $e) {
             Simple::log("_rt", $e->getMessage());
         }

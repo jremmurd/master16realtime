@@ -6,7 +6,7 @@
  * Time: 18:04
  */
 
-namespace RT\Channel\Model;
+namespace RT\Channel;
 
 
 interface Subable
