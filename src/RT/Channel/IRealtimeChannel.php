@@ -12,5 +12,8 @@ namespace RT\Channel;
 interface IRealtimeChannel
 {
     public function getRealtimeService();
-    public function getRealtimeSignature();
+    public function getRealtimeSignature($getArray);
+    public function getRoom();
+    public function getIdentifier();
+
 }

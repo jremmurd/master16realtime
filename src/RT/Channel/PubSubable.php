@@ -17,8 +17,4 @@ interface PubSubable
 
     public function publish(Event $event);
 
-    public function beforePublish();
-
-    public function beforeSubscribe();
-
 }

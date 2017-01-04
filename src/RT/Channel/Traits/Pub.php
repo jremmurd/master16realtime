@@ -26,9 +26,4 @@ trait Pub
         return $this->getRealtimeService()->push($this, $event);
     }
 
-    public function beforePublish()
-    {
-        return true;
-    }
-
 }

@@ -14,5 +14,4 @@ interface Pubable
 {
     public function publish(Event $e);
 
-    public function beforePublish();
 }

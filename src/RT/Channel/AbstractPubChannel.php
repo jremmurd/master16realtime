@@ -9,17 +9,20 @@
 namespace RT\Channel;
 
 
-use RT\Channel\Traits\PubSub;
+use RT\Channel\Traits\Pub;
 use RT\Channel\Traits\Signature;
 use RT\Service\IService;
 
-abstract class AbstractChannel implements PubSubable, IRealtimeChannel
+abstract class AbstractPubChannel implements Pubable, IRealtimeChannel
 {
     protected $service;
     protected $room;
     protected $identifier;
 
-    use PubSub;
+    protected $beforePublishFn;
+    protected $beforeSubscribeFn;
+
+    use Pub;
     use Signature;
 
     public function __construct(IService $service, string $identifier, string $room)

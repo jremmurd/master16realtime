@@ -67,7 +67,7 @@ class SocketBrokerService implements IService
 //        $promise = new \React\Promise\Promise($resolver, $canceller);
 
         $data = $event->getJsonData();
-        $data["rooms"] = $channel->getRealtimeSignature();
+        $data["room"] = $channel->getRealtimeSignature(true)[1];
 
         Simple::log('_rt', print_r($event,1));
         Simple::log('_rt', json_encode($event));

@@ -11,6 +11,5 @@ namespace RT\Channel;
 
 interface Subable
 {
-    public function beforeSubscribe();
     public function subscribe();
 }

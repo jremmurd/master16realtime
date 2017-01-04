@@ -19,13 +19,14 @@ trait Sub
         }
 
         $signature = $this->getRealtimeSignature(true);
-        ServiceLocator::instance()->getCodebase()->add(new Subscription($signature[0], $signature[1], "console.log(res);"));
 
-    }
+        if (method_exists($this, "getSubscription")) {
+            $sub = $this->getSubscription();
+        } else {
+            $sub = new Subscription($signature[0], $signature[1]);
+        }
 
+        ServiceLocator::instance()->getCodebase()->add($sub);
 
-    public function beforeSubscribe()
-    {
-        return true;
     }
 }

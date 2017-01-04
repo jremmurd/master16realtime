@@ -42,6 +42,17 @@ class ServiceLocator
         $this->codebase = new Codebase();
     }
 
+    /**
+     * @return ServiceLocator
+     */
+    public static function instance()
+    {
+        if (!self::$instance) {
+            self::$instance = new self();
+        }
+        return self::$instance;
+    }
+
     public function setEndpoint(string $serviceType, IEndpoint $endpoint)
     {
         if (class_exists($serviceType)) {
@@ -52,17 +63,6 @@ class ServiceLocator
     public function getCodebase()
     {
         return $this->codebase;
-    }
-
-    /**
-     * @return ServiceLocator
-     */
-    public static function instance()
-    {
-        if (!self::$instance) {
-            self::$instance = new self();
-        }
-        return self::$instance;
     }
 
     protected function getService(string $serviceType)

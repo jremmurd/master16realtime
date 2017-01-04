@@ -15,7 +15,7 @@ class Subscription implements \RT\Client\Generatable
     protected $ids;
     protected $cb;
 
-    public function __construct($room, $ids, $cb)
+    public function __construct($room, $ids, $cb = "console.log(res);")
     {
         $this->room = $room;
         $this->ids = $ids;
@@ -24,8 +24,8 @@ class Subscription implements \RT\Client\Generatable
 
     public function generate()
     {
-        $ids = urlencode($this->ids);
-        $room = urlencode($this->room);
+        $ids = $this->ids;
+        $room = $this->room;
 
         return <<<JS
         
