@@ -13,7 +13,7 @@ use Carbon\Carbon;
 use Realtime\Channel\PubSubable;
 use RT\Util\Jsonify;
 
-abstract class Event
+abstract class Event implements IEvent
 {
     protected $id;
     protected $createdAt;
@@ -24,7 +24,6 @@ abstract class Event
 
     public function __construct()
     {
-        $this->id = uniqid("rt-");
         $this->createdAt = Carbon::now()->timestamp;
     }
 
@@ -34,8 +33,4 @@ abstract class Event
         return \Zend_Json::encode($this->getJsonData());
     }
 
-    public function addRoom($room)
-    {
-        $this->rooms[] = $room;
-    }
 }

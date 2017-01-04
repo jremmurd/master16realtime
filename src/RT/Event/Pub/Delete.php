@@ -11,14 +11,14 @@ namespace RT\Event\Pub;
 use RT\Event\PublishEvent;
 use RT\Util\Jsonify;
 
-class Update extends PublishEvent {
+class Delete extends PublishEvent {
 
     use Jsonify;
 
     public function __construct($data = "")
 
     {
-        parent::__construct("updated", $data);
+        parent::__construct("deleted", $data);
 
     }
 

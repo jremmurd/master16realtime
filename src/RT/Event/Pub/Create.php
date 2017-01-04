@@ -15,11 +15,9 @@ class Create extends PublishEvent {
 
     use Jsonify;
 
-    public function __construct($data)
+    public function __construct($data = "")
     {
-        parent::__construct("created");
-
-        $this->data = $data;
+        parent::__construct("created", $data);
 
     }
 

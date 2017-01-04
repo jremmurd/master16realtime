@@ -15,11 +15,11 @@ class Message extends PublishEvent
 {
     use Jsonify;
 
-    public function __construct($data)
-    {
-        parent::__construct("messaged");
+    public function __construct($data = "")
 
-        $this->data = $data;
+    {
+        parent::__construct("messaged", $data);
+
     }
 
 }

@@ -16,11 +16,12 @@ abstract class PublishEvent extends Event
     use Jsonify;
 
     protected $verb;
+    protected $data;
 
-    public function __construct($verb = "unknown")
+    public function __construct($verb = "unknown", $data)
     {
         parent::__construct();
-
+        $this->data = $data;
         $this->verb = $verb;
     }
 
@@ -33,6 +34,12 @@ abstract class PublishEvent extends Event
     public function getVerb()
     {
         return $this->verb;
+
+    }
+
+    public function setData($data)
+    {
+        $this->data = $data;
     }
 
 
