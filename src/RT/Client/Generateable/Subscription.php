@@ -8,6 +8,8 @@
  */
 namespace RT\Client\Genratable;
 
+use RT\ServiceLocator;
+
 class Subscription implements \RT\Client\Generatable
 {
 
@@ -27,9 +29,11 @@ class Subscription implements \RT\Client\Generatable
         $ids = $this->ids;
         $room = $this->room;
 
+        $socketName = ServiceLocator::instance()->getCodebase()->getSocketName();
+
         return <<<JS
         
-    io.socket.get("/$room/sub/$ids", function (res) {
+    {$socketName}.get("/$room/sub/$ids", function (res) {
         $this->cb
     });
 

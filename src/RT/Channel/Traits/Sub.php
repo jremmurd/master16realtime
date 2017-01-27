@@ -8,6 +8,7 @@
 namespace RT\Channel\Traits;
 
 use RT\Client\Genratable\Subscription;
+use RT\Client\Placement;
 use RT\ServiceLocator;
 
 trait Sub
@@ -26,7 +27,7 @@ trait Sub
             $sub = new Subscription($signature[0], $signature[1]);
         }
 
-        ServiceLocator::instance()->getCodebase()->add($sub);
+        ServiceLocator::instance()->getCodebase()->add($sub, Placement::CONNECT_CALLBACK());
 
     }
 }

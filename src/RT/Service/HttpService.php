@@ -55,16 +55,22 @@ class HttpService implements IService
         /* @var $channel PublishEvent */
 
         $url = "http://" . $this->endpoint->getHost() . ":" . $this->endpoint->getPort() .
-            "/" . $channel->getRealtimeSignature(true)[0] .
+            "/" . $channel->getRoom() .
             "/" . $event->getVerb() .
-            "/" . $channel->getRealtimeSignature(true)[1] .
+            "/" . $channel->getIdentifier() .
             "?event=" . urlencode($event);
 
 
         try {
             // todo catch 404
-            $result = file_get_contents($url);
-            Simple::log("_rt", "{$event->getVerb()} to {$channel->getRealtimeSignature()};");
+
+            if($this->get_http_response_code($url) != "200"){
+                throw new \Exception("Error occured in request {$url}.");
+            }else{
+                $result = file_get_contents($url);
+            }
+
+            Simple::log("_rt", "{$event->getVerb()} to {$channel->getRealtimeSignature()}");
         } catch (\Exception $e) {
             Simple::log("_rt", $e->getMessage());
         }
@@ -75,4 +81,10 @@ class HttpService implements IService
 
         return $result;
     }
+
+   private function get_http_response_code($url) {
+        $headers = get_headers($url);
+        return substr($headers[0], 9, 3);
+    }
+
 }

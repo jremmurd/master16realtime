@@ -8,6 +8,7 @@
 
 namespace RT\Client;
 
+use RT\Client\Genratable\Script;
 
 class Codebase implements Generatable
 {
@@ -15,26 +16,122 @@ class Codebase implements Generatable
      * @var $generatables Generatable[]
      */
     private $generatables = [];
+    private $socketEndpoint = "http://localhost:1337";
+    private $socketName = "pimcore";
 
-    public function add(Generatable $gen)
+    public function __construct()
     {
-        $this->generatables[] = $gen;
+
+
+        $this->add($this->getInitScript(), Placement::PRE_BODY());
     }
 
-    public function generate()
+    public function getInitScript()
     {
+        $configScript = <<<JS
+        
+    io.sails.url = "{$this->socketEndpoint}";
+    io.sails.transports = ['polling', 'websocket'];
+    io.sails.autoConnect = false;
+    
+    var {$this->socketName} = io.sails.connect()
+JS;
+        return new Script($configScript);
+    }
+
+    public function add(Generatable $gen, Placement $placement = null)
+    {
+        if (!$placement) {
+            $placement = Placement::POST_BODY();
+        }
+        $this->generatables[(string)$placement][] = $gen;
+    }
+
+    public function generate(Placement $placement = null)
+    {
+
         $output = "";
 
-        foreach ($this->generatables as $generatable) {
-            $output .= $generatable->generate();
+        if (!$placement) {
+
+            foreach ($this->generatables as $placement => $generatables) {
+                $placementScript = $this->generatePlacementScript($placement);
+
+                if ($placement == (string)Placement::CONNECT_CALLBACK()) {
+                    $placementScript = <<<JS
+    {$this->socketName}.on('connect', function(res){
+    {$placementScript}
+    });
+JS;
+                }
+
+                $output .= $placementScript;
+            }
+        } else {
+            $placementScript = $this->generatePlacementScript($placement);
+
+            /* place connect callback post body */
+            if ($placement == Placement::POST_BODY()) {
+                $placementScript = <<<JS
+                
+{$this->socketName}.on('connect', function(res){
+    {$this->generatePlacementScript(Placement::CONNECT_CALLBACK())}
+});
+JS;
+            }
+            $output .= $placementScript;
         }
 
         return $output;
+    }
+
+    protected function generatePlacementScript(Placement $placement)
+    {
+        $placementScript = "";
+        if ($generatables = $this->generatables[(string)$placement]) {
+            foreach ($generatables as $generatable) {
+                $placementScript .= $generatable->generate();
+            }
+        }
+        return $placementScript;
     }
 
     public function __toString()
     {
         return $this->generate();
     }
+
+    /**
+     * @return string
+     */
+    public function getEndpoint()
+    {
+        return $this->endpoint;
+    }
+
+    /**
+     * @param string $endpoint
+     */
+    public function setEndpoint($endpoint)
+    {
+        $this->endpoint = $endpoint;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSocketName()
+    {
+        return $this->socketName;
+    }
+
+    /**
+     * @param string $socketName
+     */
+    public function setSocketName($socketName)
+    {
+        $this->socketName = $socketName;
+    }
+
 
 }

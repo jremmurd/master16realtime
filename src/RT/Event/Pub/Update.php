@@ -16,10 +16,8 @@ class Update extends PublishEvent {
     use Jsonify;
 
     public function __construct($data = "")
-
     {
         parent::__construct("updated", $data);
-
     }
 
 }
