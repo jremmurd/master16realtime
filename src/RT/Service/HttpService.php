@@ -61,18 +61,12 @@ class HttpService implements IService
             "?event=" . urlencode($event);
 
 
-        try {
-            // todo catch 404
+        $result = @file_get_contents($url);
 
-            if($this->get_http_response_code($url) != "200"){
-                throw new \Exception("Error occured in request {$url}.");
-            }else{
-                $result = file_get_contents($url);
-            }
+        Simple::log("_rt", "{$event->getVerb()} to {$channel->getRealtimeSignature()}");
 
-            Simple::log("_rt", "{$event->getVerb()} to {$channel->getRealtimeSignature()}");
-        } catch (\Exception $e) {
-            Simple::log("_rt", $e->getMessage());
+        if ($result) {
+            Simple::log("_rt", "Error response from {$url}.");
         }
 
         if (!$result) {
@@ -80,11 +74,6 @@ class HttpService implements IService
         }
 
         return $result;
-    }
-
-   private function get_http_response_code($url) {
-        $headers = get_headers($url);
-        return substr($headers[0], 9, 3);
     }
 
 }

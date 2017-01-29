@@ -34,8 +34,21 @@ class Codebase implements Generatable
     io.sails.transports = ['polling', 'websocket'];
     io.sails.autoConnect = false;
     
-    var {$this->socketName} = io.sails.connect()
+    var {$this->socketName} = io.sails.connect();
+
+    var {$this->socketName}_id = "";
+
 JS;
+
+        $this->add(new Script(<<<JS
+
+    {$this->socketName}.get("/app/init", function(res){
+        if(res)
+            {$this->socketName}_id = res.id;
+    });
+JS
+        ), Placement::CONNECT_CALLBACK());
+
         return new Script($configScript);
     }
 

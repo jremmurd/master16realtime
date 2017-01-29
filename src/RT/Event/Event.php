@@ -15,7 +15,6 @@ use RT\Util\Jsonify;
 
 abstract class Event implements IEvent
 {
-    protected $id;
     protected $createdAt;
 
     protected $data;
