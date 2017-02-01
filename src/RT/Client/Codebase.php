@@ -31,7 +31,7 @@ class Codebase implements Generatable
         $configScript = <<<JS
         
     io.sails.url = "{$this->socketEndpoint}";
-    io.sails.transports = ['polling', 'websocket'];
+    io.sails.transports = ['websocket', 'polling'];
     io.sails.autoConnect = false;
     
     var {$this->socketName} = io.sails.connect();
@@ -47,7 +47,7 @@ JS;
             {$this->socketName}_id = res.id;
     });
 JS
-        ), Placement::CONNECT_CALLBACK());
+        ), Placement::RE_CONNECT_CALLBACK());
 
         return new Script($configScript);
     }
@@ -72,7 +72,7 @@ JS
 
                 if ($placement == (string)Placement::CONNECT_CALLBACK()) {
                     $placementScript = <<<JS
-    {$this->socketName}.on('connect', function(res){
+    {$this->socketName}.on('reconnect', function(res){
     {$placementScript}
     });
 JS;
@@ -87,9 +87,18 @@ JS;
             if ($placement == Placement::POST_BODY()) {
                 $placementScript = <<<JS
                 
+var handleReconnect = function(){
+    {$this->generatePlacementScript(Placement::RE_CONNECT_CALLBACK())}
+}
+                
 {$this->socketName}.on('connect', function(res){
     {$this->generatePlacementScript(Placement::CONNECT_CALLBACK())}
 });
+         
+{$this->socketName}.on('reconnect', handleReconnect);
+
+handleReconnect();
+
 JS;
             }
             $output .= $placementScript;

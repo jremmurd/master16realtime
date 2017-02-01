@@ -15,6 +15,7 @@ use RT\Enum\AbstractEnum;
  * @method static Placement BODY()
  * @method static Placement POST_BODY()
  * @method static Placement CONNECT_CALLBACK()
+ * @method static Placement RE_CONNECT_CALLBACK()
  */
 class Placement extends AbstractEnum
 {
@@ -23,5 +24,6 @@ class Placement extends AbstractEnum
     const BODY = "in-body";
     const POST_BODY = "post-body";
     const CONNECT_CALLBACK = "connect-callback";
+    const RE_CONNECT_CALLBACK = "re-connect-callback";
 
 }

@@ -27,7 +27,7 @@ trait Sub
             $sub = new Subscription($signature[0], $signature[1]);
         }
 
-        ServiceLocator::instance()->getCodebase()->add($sub, Placement::CONNECT_CALLBACK());
+        ServiceLocator::instance()->getCodebase()->add($sub, Placement::RE_CONNECT_CALLBACK());
 
     }
 }
