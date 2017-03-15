@@ -14,10 +14,8 @@ use RT\Channel\IRealtimeChannel;
 use RT\Channel\PubSubable;
 use RT\Event\Event;
 use RT\Event\PublishEvent;
-use RT\Service\Endpoint\DefaultHttpEndpoint;
+use RT\Service\Endpoint\HttpEndpoint;
 use RT\Service\Endpoint\IEndpoint;
-use RT\Service\Provider\DefaultHttpProvider;
-use RT\Service\Provider\IProvider;
 
 class HttpService implements IService
 {
@@ -27,7 +25,7 @@ class HttpService implements IService
     public function __construct(IEndpoint $endpoint = null)
     {
         if (!$endpoint) {
-            $endpoint = new DefaultHttpEndpoint();
+            $endpoint = new HttpEndpoint();
         }
         $this->endpoint = $endpoint;
 

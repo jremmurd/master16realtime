@@ -24,9 +24,11 @@ class Watch implements \RT\Client\Generatable
 
     public function generate()
     {
-        $condition = base64_decode($this->condition);
+        $condition = $this->condition;
         $room = $this->room;
         $socketName = ServiceLocator::instance()->getCodebase()->getSocketName();
+
+        $condition = urlencode($condition);
 
         return <<<JS
         

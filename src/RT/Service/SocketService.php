@@ -12,10 +12,8 @@ namespace RT\Service;
 use React\ZMQ\SocketWrapper;
 use RT\Channel\IRealtimeChannel;
 use RT\Event\Event;
-use RT\Service\Endpoint\DefaultSocketEndpoint;
+use RT\Service\Endpoint\SocketEndpoint;
 use RT\Service\Endpoint\IEndpoint;
-use RT\Service\Provider\DefaultServiceProvider;
-use RT\Service\Provider\IProvider;
 
 class SocketService implements IService
 {
@@ -25,7 +23,7 @@ class SocketService implements IService
     public function __construct(IEndpoint $endpoint = null)
     {
         if (!$endpoint) {
-            $endpoint = new DefaultSocketEndpoint();
+            $endpoint = new SocketEndpoint();
         }
 
         $context = new \ZMQContext(50, 1);

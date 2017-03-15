@@ -16,8 +16,8 @@ class Codebase implements Generatable
      * @var $generatables Generatable[]
      */
     private $generatables = [];
-    private $socketEndpoint = "http://localhost:1337";
-    private $socketName = "pimcore";
+    private $socketEndpoint = "http://192.168.1.154:1337";
+    private $socketName = "pimcoreSocket";
 
     public function __construct()
     {
@@ -33,7 +33,8 @@ class Codebase implements Generatable
     io.sails.url = "{$this->socketEndpoint}";
     io.sails.transports = ['websocket', 'polling'];
     io.sails.autoConnect = false;
-    
+    io.sails.useCORSRouteToGetCookie = false; // TODO
+
     var {$this->socketName} = io.sails.connect();
 
     var {$this->socketName}_id = "";

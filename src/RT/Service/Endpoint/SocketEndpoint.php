@@ -9,11 +9,17 @@
 
 namespace RT\Service\Endpoint;
 
-class DefaultHttpEndpoint implements IEndpoint
+class SocketEndpoint implements IEndpoint
 {
 
-    protected $host = "127.0.0.1";
-    protected $port = "1337";
+    protected $host ;
+    protected $port ;
+
+    function __construct($host ="127.0.0.1" , $port="5559")
+    {
+        $this->host = $host;
+        $this->port = $port;
+    }
 
     /**
      * @return string
