@@ -36,10 +36,14 @@ class ServiceLocator
      */
     protected $codebase;
 
+    protected static $codebaseConfig = [
+        "endpoint" => "http://localhost",
+        "socketName" => "pimcoreSocket"
+    ];
 
     private function __construct()
     {
-        $this->codebase = new Codebase();
+        $this->codebase = new Codebase(self::$codebaseConfig);
     }
 
     /**
@@ -63,6 +67,11 @@ class ServiceLocator
     public function getCodebase()
     {
         return $this->codebase;
+    }
+
+    public static function setCodebaseConfig(array $config)
+    {
+        self::$codebaseConfig = $config;
     }
 
     protected function getService(string $serviceType)
