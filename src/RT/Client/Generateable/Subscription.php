@@ -26,8 +26,8 @@ class Subscription implements \RT\Client\Generatable
 
     public function generate()
     {
-        $ids = $this->ids;
-        $room = $this->room;
+        $ids = urlencode($this->ids);
+        $room = urlencode($this->room);
 
         $socketName = ServiceLocator::instance()->getCodebase()->getSocketName();
 

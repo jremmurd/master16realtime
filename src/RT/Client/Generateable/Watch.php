@@ -24,8 +24,8 @@ class Watch implements \RT\Client\Generatable
 
     public function generate()
     {
-        $condition = $this->condition;
-        $room = $this->room;
+        $room = urlencode($this->room);
+        $condition = urlencode($this->condition);
         $socketName = ServiceLocator::instance()->getCodebase()->getSocketName();
 
         $condition = urlencode($condition);
