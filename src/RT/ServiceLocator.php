@@ -9,14 +9,12 @@
 
 namespace RT;
 
-use Pimcore\Log\Simple;
 use RT\Client\Codebase;
 use RT\Service\HttpService;
 use RT\Service\Endpoint\IEndpoint;
 use RT\Service\IService;
 use RT\Service\SocketBrokerService;
 use RT\Service\SocketService;
-use Symfony\Component\VarDumper\Caster\ReflectionCaster;
 
 class ServiceLocator
 {

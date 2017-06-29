@@ -9,7 +9,6 @@
 
 namespace RT\Service;
 
-use Pimcore\Log\Simple;
 use React\ZMQ\SocketWrapper;
 use RT\Channel\IRealtimeChannel;
 use RT\Event\Event;
@@ -24,8 +23,6 @@ class SocketBrokerService implements IService
     public function __construct(IEndpoint $endpoint = null)
     {
         // TODO: consider starting the broker automatically, or output errors etc
-
-        Simple::log("_rt", print_r($endpoint, 1));
 
         if (!$endpoint) {
             $endpoint = new SocketEndpoint();
@@ -69,8 +66,6 @@ class SocketBrokerService implements IService
         $data = $event->getJsonData();
         $data["room"] = $channel->getRealtimeSignature(true)[1];
 
-        Simple::log('_rt', print_r($event,1));
-        Simple::log('_rt', json_encode($event));
         $this->socket->send(json_encode($data));
         $result = $this->socket->recv();
 

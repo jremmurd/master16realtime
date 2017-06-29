@@ -9,8 +9,6 @@
 
 namespace RT\Channel\Traits;
 
-use Pimcore\API\Plugin\Exception;
-
 trait Pub
 {
 
@@ -21,7 +19,7 @@ trait Pub
         }
 
         if (!method_exists($this, "getRealtimeService")) {
-            throw new Exception("Required method getRealtimeService missing. PubSub Trait has to be used in RealtimeChannel context. ");
+            throw new \Exception("Required method getRealtimeService missing. PubSub Trait has to be used in RealtimeChannel context. ");
         }
         return $this->getRealtimeService()->push($this, $event);
     }

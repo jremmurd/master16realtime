@@ -10,21 +10,26 @@ namespace RT\Client\Genratable;
 class Script implements \RT\Client\Generatable
 {
 
- protected $script;
+    protected $script;
 
- public function __construct($script)
- {
-     $this->script = $script;
- }
+    public function __construct($script)
+    {
+        $this->script = $script;
+    }
 
- public function generate()
- {
+    public function generate()
+    {
 
-  return <<<JS
+        return <<<JS
         
    $this->script;
 
 JS;
- }
+    }
+
+    public function __toString()
+    {
+        return $this->generate();
+    }
 
 }

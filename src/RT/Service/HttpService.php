@@ -9,9 +9,7 @@
 
 namespace RT\Service;
 
-use Pimcore\Log\Simple;
 use RT\Channel\IRealtimeChannel;
-use RT\Channel\PubSubable;
 use RT\Event\Event;
 use RT\Event\PublishEvent;
 use RT\Service\Endpoint\HttpEndpoint;
@@ -61,11 +59,11 @@ class HttpService implements IService
 
         $result = @file_get_contents($url);
 
-        Simple::log("_rt", "{$event->getVerb()} to {$channel->getRealtimeSignature()}");
+//        \Pimcore\Log\Simple::log("_rt", "{$event->getVerb()} to {$channel->getRealtimeSignature()}");
 
-        if ($result) {
-            Simple::log("_rt", "Error response from {$url}.");
-        }
+//        if ($result) {
+//            \Pimcore\Log\Simple::log("_rt", "Error response from {$url}.");
+//        }
 
         if (!$result) {
             $this->error();
