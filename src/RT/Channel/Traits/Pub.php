@@ -14,7 +14,7 @@ trait Pub
 
     public function publish(\RT\Event\Event $event)
     {
-        if (method_exists($this, "beforePublish") && !$this->beforePublish()) {
+        if (method_exists($this, "beforePublish") && $this->beforePublish($event) === false) {
             return false;
         }
 
