@@ -45,7 +45,7 @@ trait Sub
             $sub = new UnSubscription($signature[0], $signature[1]);
         }
 
-        ServiceLocator::instance()->getCodebase()->add($sub, Placement::RE_CONNECT_CALLBACK());
+        ServiceLocator::instance()->getCodebase()->add($sub);
 
     }
 }

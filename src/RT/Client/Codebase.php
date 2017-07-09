@@ -56,7 +56,7 @@ JS
     public function add(Generatable $gen, Placement $placement = null)
     {
         if (!$placement) {
-            $placement = Placement::POST_BODY();
+            $placement = Placement::DEFAULT();
         }
         $this->generatables[(string)$placement][] = $gen;
     }
