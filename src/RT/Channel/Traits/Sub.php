@@ -15,7 +15,7 @@ trait Sub
 {
     public function subscribe()
     {
-        if (method_exists($this, "beforeSubscribe") && !$this->beforeSubscribe()) {
+        if (method_exists($this, "beforeSubscribe") && $this->beforeSubscribe() === false) {
             return false;
         }
 
@@ -25,6 +25,24 @@ trait Sub
             $sub = $this->getSubscription();
         } else {
             $sub = new Subscription($signature[0], $signature[1]);
+        }
+
+        ServiceLocator::instance()->getCodebase()->add($sub, Placement::RE_CONNECT_CALLBACK());
+
+    }
+
+    public function unsubscribe()
+    {
+        if (method_exists($this, "beforeUnsubscribe") && $this->beforeUnsubscribe() === false) {
+            return false;
+        }
+
+        $signature = $this->getRealtimeSignature(true);
+
+        if (method_exists($this, "getUnSubscription")) {
+            $sub = $this->getUnSubscription();
+        } else {
+            $sub = new UnSubscription($signature[0], $signature[1]);
         }
 
         ServiceLocator::instance()->getCodebase()->add($sub, Placement::RE_CONNECT_CALLBACK());
