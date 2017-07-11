@@ -5,7 +5,7 @@
  * Date: 02.01.2017
  * Time: 13:28
  */
-namespace RT\Client\Genratable;
+namespace RT\Client\Generatable;
 
 class Script implements \RT\Client\Generatable
 {

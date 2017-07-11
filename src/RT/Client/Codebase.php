@@ -8,7 +8,7 @@
 
 namespace RT\Client;
 
-use RT\Client\Genratable\Script;
+use RT\Client\Generatable\Script;
 
 class Codebase implements Generatable
 {

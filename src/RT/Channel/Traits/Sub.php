@@ -7,7 +7,7 @@
  */
 namespace RT\Channel\Traits;
 
-use RT\Client\Genratable\Subscription;
+use RT\Client\Generatable\Subscription;
 use RT\Client\Placement;
 use RT\ServiceLocator;
 
