@@ -29,10 +29,7 @@ class Watch implements \RT\Client\Generatable
         $socketName = ServiceLocator::instance()->getCodebase()->getSocketName();
 
         return <<<JS
-        
-    {$socketName}.get("/$room/watch/$condition", function (res) {
-        $this->cb
-    });
+reconnectUrls.push("/$room/watch/$condition");
 
 JS;
     }

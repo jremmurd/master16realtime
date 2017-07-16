@@ -17,11 +17,10 @@ class Subscription implements \RT\Client\Generatable
     protected $ids;
     protected $cb;
 
-    public function __construct($room, $ids, $cb = "console.log(res);")
+    public function __construct($room, $ids)
     {
         $this->room = $room;
         $this->ids = $ids;
-        $this->cb = $cb;
     }
 
     public function generate()
@@ -32,10 +31,7 @@ class Subscription implements \RT\Client\Generatable
         $socketName = ServiceLocator::instance()->getCodebase()->getSocketName();
 
         return <<<JS
-        
-    {$socketName}.get("/$room/sub/$ids", function (res) {
-        $this->cb
-    });
+reconnectUrls.push("/$room/sub/$ids");
 
 JS;
     }

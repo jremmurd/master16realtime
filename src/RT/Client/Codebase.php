@@ -41,15 +41,6 @@ class Codebase implements Generatable
 
 JS;
 
-        $this->add(new Script(<<<JS
-
-    {$this->socketName}.get("/app/init", function(res){
-        if(res)
-            {$this->socketName}_id = res.id;
-    });
-JS
-        ), Placement::RE_CONNECT_CALLBACK());
-
         return new Script($configScript);
     }
 
@@ -88,17 +79,34 @@ JS;
             if ($placement == Placement::POST_BODY()) {
                 $placementScript = <<<JS
                 
+var reconnectUrls = [];
+{$this->generatePlacementScript(Placement::RE_CONNECT_CALLBACK_URL())}
+
 var handleReconnect = function(){
-    {$this->generatePlacementScript(Placement::RE_CONNECT_CALLBACK())}
+    
+    {$this->socketName}.get("/app/init", function(res){
+        if(res)
+            {$this->socketName}_id = res.id;
+    });
+    
+    reconnectUrls.forEach(function(url, index){
+        {$this->socketName}.get(url, function (res) {
+            console.log(res);
+        });
+    })
 }
                 
 {$this->socketName}.on('connect', function(res){
     {$this->generatePlacementScript(Placement::CONNECT_CALLBACK())}
 });
          
-{$this->socketName}.on('reconnect', handleReconnect);
+{$this->socketName}.on('reconnect', function(res){
+    handleReconnect();
+    {$this->generatePlacementScript(Placement::RE_CONNECT_CALLBACK())}
+});
 
 handleReconnect();
+
 
 JS;
             }

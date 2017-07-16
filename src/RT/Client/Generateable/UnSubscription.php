@@ -32,10 +32,17 @@ class UnSubscription implements \RT\Client\Generatable
         $socketName = ServiceLocator::instance()->getCodebase()->getSocketName();
 
         return <<<JS
+
+var url = "/$room/unsub/$ids";
         
-    {$socketName}.get("/$room/unsub/$ids", function (res) {
-        $this->cb
-    });
+{$socketName}.get(url, function (res) {
+    $this->cb
+});
+
+var index = $.inArray(item, reconnectUrls);
+if (index != -1) {
+    reconnectUrls.splice(index, 1);
+}
 
 JS;
     }

@@ -16,6 +16,7 @@ use RT\Enum\AbstractEnum;
  * @method static Placement POST_BODY()
  * @method static Placement CONNECT_CALLBACK()
  * @method static Placement RE_CONNECT_CALLBACK()
+ * @method static Placement RE_CONNECT_CALLBACK_URL()
  * @method static Placement DEFAULT()
  */
 class Placement extends AbstractEnum
@@ -26,6 +27,7 @@ class Placement extends AbstractEnum
     const POST_BODY = "post-body";
     const CONNECT_CALLBACK = "connect-callback";
     const RE_CONNECT_CALLBACK = "re-connect-callback";
+    const RE_CONNECT_CALLBACK_URL = "re-connect-callback-url";
     const DEFAULT = "default";
 
 }
