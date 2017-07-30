@@ -13,6 +13,8 @@ use RT\Event\Event;
 interface PubSubable
 {
 
+    public function unsubscribe();
+
     public function subscribe();
 
     public function publish(Event $event);
