@@ -19,13 +19,10 @@ abstract class Event implements IEvent
 
     protected $data;
 
-    use Jsonify;
-
     public function __construct()
     {
         $this->createdAt = Carbon::now()->timestamp;
     }
-
 
     public function __toString()
     {

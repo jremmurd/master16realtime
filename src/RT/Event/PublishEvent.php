@@ -11,7 +11,7 @@ namespace RT\Event;
 use Carbon\Carbon;
 use RT\Util\Jsonify;
 
-abstract class PublishEvent extends Event
+abstract class PublishEvent extends Event implements IPublishEvent
 {
     use Jsonify;
 

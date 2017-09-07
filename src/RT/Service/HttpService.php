@@ -59,7 +59,7 @@ class HttpService implements IService
 
         $result = @file_get_contents($url);
 
-//        \Pimcore\Log\Simple::log("_rt", "{$event->getVerb()} to {$channel->getRealtimeSignature()}");
+//        \Pimcore\Log\Simple::log("_rt", $url);
 
 //        if ($result) {
 //            \Pimcore\Log\Simple::log("_rt", "Error response from {$url}.");
